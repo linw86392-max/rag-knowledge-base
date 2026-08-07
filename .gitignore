@@ -1,0 +1,27 @@
+# 敏感文件
+data/docs/API-key.txt
+
+# 个人简历（含隐私，不推）
+data/docs/前端开发-林旺*.pdf
+data/docs/林旺-AI应用开发工程师*.md
+
+# 向量库（云容器不持久，启动时重建）
+data/chroma_db/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 日志
+*.log
+server_out.log
+server_err.log
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
