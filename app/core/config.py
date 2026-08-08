@@ -9,12 +9,12 @@ DATA_DIR = BASE_DIR / "data"
 DOCS_DIR = DATA_DIR / "docs"
 CHROMA_DIR = DATA_DIR / "chroma_db"
 
-# LLM 配置：ollama（本地）/ dashscope（通义）/ deepseek
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "deepseek")  # ollama / dashscope / deepseek
+# LLM 配置：ollama（本地）/ dashscope（通义）/ deepseek / siliconflow
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "deepseek")  # ollama / dashscope / deepseek / siliconflow
 
-# Embedding 配置：ollama（本地免费）/ dashscope（通义）
-# 注意：DeepSeek 不提供 embedding，用 deepseek 时默认 dashscope 向量化
-EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "dashscope")
+# Embedding 配置：ollama（本地免费）/ dashscope（通义）/ siliconflow（硅基流动）
+# 注意：DeepSeek 不提供 embedding，用 deepseek 时默认 siliconflow 向量化
+EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "siliconflow")
 
 # Ollama 本地模型
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
@@ -29,6 +29,12 @@ DASHSCOPE_EMBEDDING_MODEL = os.getenv("DASHSCOPE_EMBEDDING_MODEL", "text-embeddi
 # DeepSeek
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
 DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+
+# 硅基流动 SiliconFlow（OpenAI 兼容，LLM + Embedding）
+SILICONFLOW_API_KEY = os.getenv("SILICONFLOW_API_KEY", "")
+SILICONFLOW_BASE_URL = os.getenv("SILICONFLOW_BASE_URL", "https://api.siliconflow.cn/v1")
+SILICONFLOW_MODEL = os.getenv("SILICONFLOW_MODEL", "Qwen/Qwen2.5-7B-Instruct")
+SILICONFLOW_EMBEDDING_MODEL = os.getenv("SILICONFLOW_EMBEDDING_MODEL", "BAAI/bge-m3")
 
 # 分块参数
 CHUNK_SIZE = 500

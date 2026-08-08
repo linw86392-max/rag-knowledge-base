@@ -16,6 +16,10 @@ from app.core.config import (
     DASHSCOPE_EMBEDDING_MODEL,
     DEEPSEEK_API_KEY,
     DEEPSEEK_MODEL,
+    SILICONFLOW_API_KEY,
+    SILICONFLOW_BASE_URL,
+    SILICONFLOW_MODEL,
+    SILICONFLOW_EMBEDDING_MODEL,
 )
 
 
@@ -35,6 +39,14 @@ def get_llm():
             temperature=0.3,
             timeout=60,
         )
+    if LLM_PROVIDER == "siliconflow":
+        return ChatOpenAI(
+            api_key=SILICONFLOW_API_KEY,
+            model=SILICONFLOW_MODEL,
+            base_url=SILICONFLOW_BASE_URL,
+            temperature=0.3,
+            timeout=60,
+        )
     # 默认通义千问（阿里云百炼，OpenAI 兼容端点）
     return ChatOpenAI(
         api_key=DASHSCOPE_API_KEY,
@@ -51,6 +63,12 @@ def get_embeddings():
         return OllamaEmbeddings(
             base_url=OLLAMA_BASE_URL,
             model=OLLAMA_EMBEDDING_MODEL,
+        )
+    if EMBEDDING_PROVIDER == "siliconflow":
+        return OpenAIEmbeddings(
+            api_key=SILICONFLOW_API_KEY,
+            model=SILICONFLOW_EMBEDDING_MODEL,
+            base_url=SILICONFLOW_BASE_URL,
         )
     return OpenAIEmbeddings(
         api_key=DASHSCOPE_API_KEY,
