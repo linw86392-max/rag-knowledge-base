@@ -22,9 +22,11 @@ def load_document(file_path: Path):
     elif suffix in (".md", ".txt"):
         from langchain_community.document_loaders import TextLoader
         loader = TextLoader(source, encoding="utf-8")
-    elif suffix in (".docx", ".doc"):
-        from langchain_community.document_loaders import UnstructuredWordDocumentLoader
-        loader = UnstructuredWordDocumentLoader(source)
+    elif suffix == ".docx":
+        from langchain_community.document_loaders import Docx2txtLoader
+        loader = Docx2txtLoader(source)
+    elif suffix == ".doc":
+        raise ValueError(".doc 老格式请先在 Word 中另存为 .docx 再上传")
     else:
         raise ValueError(f"不支持的文件类型: {suffix}")
 
