@@ -77,6 +77,23 @@ if _boot.get("rebuilt"):
 elif _boot.get("error"):
     st.warning(f"知识库初始化提示：{_boot['error']}")
 
+with st.expander("🔧 环境诊断（排查用，可忽略）"):
+    import os as _os
+    env_keys = ["LLM_PROVIDER", "EMBEDDING_PROVIDER", "DEEPSEEK_API_KEY", "SILICONFLOW_API_KEY"]
+    for k in env_keys:
+        v = _os.getenv(k) or ""
+        st.write(f"环境变量 {k} = {'已设置(len=' + str(len(v)) + ')' if v else '未设置(空)'}")
+    try:
+        sec = dict(st.secrets)
+        st.write(f"st.secrets 可用 keys: {list(sec.keys())}")
+        for k in env_keys:
+            if k in sec:
+                st.write(f"secrets[{k}] = 已设置(len={len(str(sec[k]))})")
+            else:
+                st.write(f"secrets[{k}] = 缺失")
+    except Exception as e:
+        st.write(f"st.secrets 读取失败: {e}")
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
