@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 """模型工厂：统一返回 ChatModel 与 Embedding"""
-from langchain_ollama import ChatOllama, OllamaEmbeddings
-from langchain_openai import ChatOpenAI
-from langchain_openai import OpenAIEmbeddings
-from langchain_deepseek import ChatDeepSeek
-
 from app.core.config import (
     LLM_PROVIDER,
     EMBEDDING_PROVIDER,
@@ -26,6 +21,7 @@ from app.core.config import (
 def get_llm():
     """返回大模型聊天实例"""
     if LLM_PROVIDER == "ollama":
+        from langchain_ollama import ChatOllama
         return ChatOllama(
             base_url=OLLAMA_BASE_URL,
             model=OLLAMA_MODEL,
@@ -33,6 +29,7 @@ def get_llm():
             num_ctx=8192,
         )
     if LLM_PROVIDER == "deepseek":
+        from langchain_deepseek import ChatDeepSeek
         return ChatDeepSeek(
             api_key=DEEPSEEK_API_KEY,
             model=DEEPSEEK_MODEL,
@@ -40,6 +37,7 @@ def get_llm():
             timeout=60,
         )
     if LLM_PROVIDER == "siliconflow":
+        from langchain_openai import ChatOpenAI
         return ChatOpenAI(
             api_key=SILICONFLOW_API_KEY,
             model=SILICONFLOW_MODEL,
@@ -48,6 +46,7 @@ def get_llm():
             timeout=60,
         )
     # 默认通义千问（阿里云百炼，OpenAI 兼容端点）
+    from langchain_openai import ChatOpenAI
     return ChatOpenAI(
         api_key=DASHSCOPE_API_KEY,
         model=DASHSCOPE_MODEL,
@@ -60,16 +59,19 @@ def get_llm():
 def get_embeddings():
     """返回 Embedding 模型实例（与 LLM 独立配置）"""
     if EMBEDDING_PROVIDER == "ollama":
+        from langchain_ollama import OllamaEmbeddings
         return OllamaEmbeddings(
             base_url=OLLAMA_BASE_URL,
             model=OLLAMA_EMBEDDING_MODEL,
         )
     if EMBEDDING_PROVIDER == "siliconflow":
+        from langchain_openai import OpenAIEmbeddings
         return OpenAIEmbeddings(
             api_key=SILICONFLOW_API_KEY,
             model=SILICONFLOW_EMBEDDING_MODEL,
             base_url=SILICONFLOW_BASE_URL,
         )
+    from langchain_openai import OpenAIEmbeddings
     return OpenAIEmbeddings(
         api_key=DASHSCOPE_API_KEY,
         model=DASHSCOPE_EMBEDDING_MODEL,

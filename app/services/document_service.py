@@ -4,7 +4,6 @@ import uuid
 from pathlib import Path
 from typing import List
 
-from langchain_community.document_loaders import PyPDFLoader, TextLoader, UnstructuredWordDocumentLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 
@@ -18,10 +17,13 @@ def load_document(file_path: Path):
     source = str(file_path)
 
     if suffix == ".pdf":
+        from langchain_community.document_loaders import PyPDFLoader
         loader = PyPDFLoader(source)
     elif suffix in (".md", ".txt"):
+        from langchain_community.document_loaders import TextLoader
         loader = TextLoader(source, encoding="utf-8")
     elif suffix in (".docx", ".doc"):
+        from langchain_community.document_loaders import UnstructuredWordDocumentLoader
         loader = UnstructuredWordDocumentLoader(source)
     else:
         raise ValueError(f"不支持的文件类型: {suffix}")
